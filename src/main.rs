@@ -26,13 +26,47 @@ async fn make_notifications_request() -> Result<Notifications, Box<dyn std::erro
         .await?;
 
     let notifications = res.json::<Notifications>().await?;
-    println!("{}", notifications[0].id);
     Ok(notifications)
+}
+
+async fn show_notifications_cli() ->Result<(), Box<dyn std::error::Error>> {
+    let notifications  = make_notifications_request().await?;
+
+    for n in notifications {
+        let full_name = n.repository.full_name;
+        let url = n.subject.url;
+        let title = n.subject.title;
+
+        let first_bar_size = full_name.chars().count() + url.chars().count();
+        let second_bar_size = title.chars().count();
+        let first_bar_is_bigger =  first_bar_size > second_bar_size;
+
+        let total_width = if first_bar_is_bigger { first_bar_size } else { second_bar_size };
+
+        let mut box_size = "━".to_owned();
+        for _ in 0..total_width { box_size.push_str("━") };
+
+
+        let mut first_bar_space_size = " ".to_owned();
+        let mut second_bar_space_size = " ".to_owned();
+        if first_bar_is_bigger {
+            for _ in 0..first_bar_size - second_bar_size { second_bar_space_size.push_str(" ") };
+        } else {
+            for _ in 0..first_bar_size - second_bar_size { first_bar_space_size.push_str(" ") };
+        }
+
+        println!("┏━{}━┓", box_size);
+        println!("┃ {} {}{}┃", full_name, url, first_bar_space_size );
+        println!("┃ {} {}┃",  title, second_bar_space_size );
+        println!("┗━{}━┛", box_size);
+    };
+
+    Ok(())
 }
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
-    make_notifications_request().await?;
+    show_notifications_cli().await?;
     Ok(())
 }

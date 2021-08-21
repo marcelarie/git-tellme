@@ -19,3 +19,4 @@ async fn make_request() -> Result<(), Box<dyn std::error::Error>> {}
     1. Use Box<> structure to create a allocation on the heap to save the variable size of errors
     2. USER_AGENT lets servers identify the application
     3. serde_json::Value->enum to serialize arbitrary json structure
+    4. mod name_folder to get a folder/mod.rs and then use name_folder::file::struct;
