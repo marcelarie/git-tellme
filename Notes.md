@@ -20,3 +20,25 @@ async fn make_request() -> Result<(), Box<dyn std::error::Error>> {}
     2. USER_AGENT lets servers identify the application
     3. serde_json::Value->enum to serialize arbitrary json structure
     4. mod name_folder to get a folder/mod.rs and then use name_folder::file::struct;
+
+# Remember dom 22 ago 2021 18:47:48
+
+1. Change Type of returned json
+
+```rust
+fn main () {
+    let html_url = if n.subject.subject_type == "Issue" {
+        make_json_request(&url)
+        .await?
+        .json::<Issue>()
+        .await?
+        .html_url
+    } else {
+        make_json_request(&url)
+        .await?
+        .json::<PullRequest>()
+        .await?
+        .html_url
+    };
+}
+```

@@ -23,9 +23,9 @@ Or create a binary with `cargo build` and add it to your **$PATH**.
 ## Main Todos
 
 -   [ ] Ask for username and authentication token or password and write it on the .env
--   [x] Get notifications from the user
--   [x] Draw dynamic boxes for the CLI ( make this better )
--   [ ] Open issue on the browser when clicking on the issue id
+-   [ ] Get notifications from the user
+-   [x] Draw dynamic boxes for the CLI
+-   [x] Open issue on the browser when clicking on the issue id ( on CLI)
 -   [ ] Get user profile on the browser when clicking on the user.
 -   [ ] Same with repo.
 -   [ ] Create cronos to check for new repos from other users.
