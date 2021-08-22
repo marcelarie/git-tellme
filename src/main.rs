@@ -1,7 +1,7 @@
 use dotenv::dotenv;
 use reqwest::{
     header::{HeaderMap, HeaderValue, AUTHORIZATION, USER_AGENT},
-    Client,
+    Client, Response,
 };
 use std::env;
 
@@ -18,48 +18,60 @@ fn construct_headers() -> HeaderMap {
     headers
 }
 
-async fn make_notifications_request() -> Result<Notifications, Box<dyn std::error::Error>> {
+async fn make_json_request(url: &str) -> Result<Response, Box<dyn std::error::Error>> {
     let res = Client::new()
-        .get("https://api.github.com/notifications")
+        .get(url)
         .headers(construct_headers())
         .send()
         .await?;
-
-    let notifications = res.json::<Notifications>().await?;
-    Ok(notifications)
+    Ok(res)
 }
 
-async fn show_notifications_cli() ->Result<(), Box<dyn std::error::Error>> {
-    let notifications  = make_notifications_request().await?;
+fn draw_box(content: &[String]) {
+    // get max size
+    let mut max_width = 0;
+    for item in content.iter() {
+        if item.chars().count() > max_width {
+            max_width = item.chars().count()
+        };
+    }
+    // generate box_width
+    let mut box_width = "━".to_owned();
+    for _ in 0 .. max_width {
+        box_width.push_str("━")
+    }
 
-    for n in notifications {
-        let full_name = n.repository.full_name;
-        let url = n.subject.url;
-        let title = n.subject.title;
+    // print full box
+    println!("┏━{}━┓", box_width);
+    for item in content.iter() {
+        let count = item.chars().count();
+        let mut space_size = " ".to_owned();
+        if count < max_width {
+            for _ in 0 .. max_width - count {
+                space_size.push_str(" ")
+            }
+        };
+        println!("┃ {}{} ┃", item, space_size);
+    }
+    println!("┗━{}━┛", box_width);
+}
 
-        let first_bar_size = full_name.chars().count() + url.chars().count();
-        let second_bar_size = title.chars().count();
-        let first_bar_is_bigger =  first_bar_size > second_bar_size;
+async fn show_notifications_cli() -> Result<(), Box<dyn std::error::Error>> {
+    let notifications = make_json_request("https://api.github.com/notifications")
+        .await?
+        .json::<Notifications>()
+        .await?;
+    {
+        for n in notifications {
+            let full_name = n.repository.full_name;
+            let url = n.subject.url;
+            let title = n.subject.title;
 
-        let total_width = if first_bar_is_bigger { first_bar_size } else { second_bar_size };
+            let content = [title, [full_name, url].join(" ")];
 
-        let mut box_size = "━".to_owned();
-        for _ in 0..total_width { box_size.push_str("━") };
-
-
-        let mut first_bar_space_size = " ".to_owned();
-        let mut second_bar_space_size = " ".to_owned();
-        if first_bar_is_bigger {
-            for _ in 0..first_bar_size - second_bar_size { second_bar_space_size.push_str(" ") };
-        } else {
-            for _ in 0..first_bar_size - second_bar_size { first_bar_space_size.push_str(" ") };
+            draw_box(&content)
         }
-
-        println!("┏━{}━┓", box_size);
-        println!("┃ {} {}{}┃", full_name, url, first_bar_space_size );
-        println!("┃ {} {}┃",  title, second_bar_space_size );
-        println!("┗━{}━┛", box_size);
-    };
+    }
 
     Ok(())
 }
