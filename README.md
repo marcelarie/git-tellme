@@ -31,6 +31,7 @@ Or create a binary with `cargo build` and add it to your **$PATH**.
 -   [ ] Create cronos to check for new repos from other users.
 -   [ ] Frontend with Gtk (?)
 -   [ ] Notification Bell 🔔
+-   [ ] Work with FZF, FZY
 
 ### Using
 

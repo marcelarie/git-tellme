@@ -6,7 +6,9 @@ use reqwest::{
 use std::env;
 
 mod models;
+use models::issue::Issue;
 use models::notifications::Notifications;
+use models::pull::PullRequest;
 
 fn construct_headers() -> HeaderMap {
     let mut headers = HeaderMap::new();
@@ -61,16 +63,29 @@ async fn show_notifications_cli() -> Result<(), Box<dyn std::error::Error>> {
         .await?
         .json::<Notifications>()
         .await?;
-    {
-        for n in notifications {
-            let full_name = n.repository.full_name;
-            let url = n.subject.url;
-            let title = n.subject.title;
 
-            let content = [title, [full_name, url].join(" ")];
+    for n in notifications {
+        let full_name = n.repository.full_name;
+        let url = n.subject.url;
+        let title = n.subject.title;
 
-            draw_box(&content)
-        }
+        let html_url = if n.subject.subject_type == "Issue" {
+            make_json_request(&url)
+                .await?
+                .json::<Issue>()
+                .await?
+                .html_url
+        } else {
+            make_json_request(&url)
+                .await?
+                .json::<PullRequest>()
+                .await?
+                .html_url
+        };
+
+        let content = [[full_name, html_url].join(" "), title];
+
+        draw_box(&content)
     }
 
     Ok(())
