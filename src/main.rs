@@ -5,9 +5,12 @@ use reqwest::{
     Client, Response,
 };
 use std::env;
+use structopt::StructOpt;
 
 mod models;
+mod options;
 use models::notifications::Notifications;
+use options::Opt;
 
 fn construct_headers() -> HeaderMap {
     let mut headers = HeaderMap::new();
@@ -61,6 +64,7 @@ fn draw_box(content: &[String], subject_type: String) {
     .join("");
 
     // print full box
+    // color by type
     if subject_type == "Issue" {
         println!("{}", upper_box.truecolor(211, 160, 77))
     } else {
@@ -75,7 +79,6 @@ fn draw_box(content: &[String], subject_type: String) {
             }
         };
 
-        // color by type
         if subject_type == "Issue" {
             println!(
                 "{} {}{} {}",
@@ -116,7 +119,7 @@ async fn show_notifications_cli() -> Result<(), Box<dyn std::error::Error>> {
         let url = url.replace("https://api.github.com/repos/", "https://github.com/");
         let url = url.replace("pulls", "pull");
 
-        let content = [title, [full_name, url].join(" ")];
+        let content = [title, [full_name, url].join(" "), subject_type.clone()];
 
         draw_box(&content, subject_type)
     }
@@ -126,6 +129,8 @@ async fn show_notifications_cli() -> Result<(), Box<dyn std::error::Error>> {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let opt = Opt::from_args();
+    println!("{:#?}", opt);
     dotenv().ok();
     show_notifications_cli().await?;
     Ok(())

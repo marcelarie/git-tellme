@@ -42,3 +42,22 @@ fn main () {
     };
 }
 ```
+
+Nice borders
+
+<!-- local border = { -->
+  <!-- { "🭽", "FloatBorder" }, -->
+
+  <!-- { "▔", "FloatBorder" }, -->
+
+  <!-- { "🭾", "FloatBorder" }, -->
+
+  <!-- { "▕", "FloatBorder" }, -->
+
+  <!-- { "🭿", "FloatBorder" }, -->
+
+  <!-- { "▁", "FloatBorder" }, -->
+
+  <!-- { "🭼", "FloatBorder" }, -->
+
+  <!-- { "▏", "FloatBorder" }, -->

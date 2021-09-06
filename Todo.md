@@ -5,3 +5,5 @@
 -   [x] Create function to calculate size of box and spaces with multiple data
 -   [ ] Better colors
 -   [ ] Add icons on the CLI
+-   [ ] Add CLI commands
+-   [ ] Add --help
