@@ -10,11 +10,13 @@ use structopt::StructOpt;
 mod models;
 mod options;
 use models::notifications::Notifications;
+use models::repos::Repos;
+use models::user::User;
 use options::Opt;
 
 fn construct_headers() -> HeaderMap {
     let mut headers = HeaderMap::new();
-    let token = env::var("AUTH_TOKEN").unwrap();
+    let token = env::var("AUTH_TOKEN").expect("No AUTH_TOKEN found on the .env file");
     headers.insert(AUTHORIZATION, HeaderValue::from_str(&token).unwrap());
     headers.insert(USER_AGENT, HeaderValue::from_static("reqwest"));
     assert!(headers.contains_key(AUTHORIZATION));
@@ -42,7 +44,7 @@ fn draw_box(content: &[String], subject_type: String) {
     let box_lines = ["┏", "━", "┓", "┃", "┗", "┛"];
     // generate box_width
     let mut box_width = box_lines[1].to_owned();
-    for _ in 0 .. max_width {
+    for _ in 0..max_width {
         box_width.push_str(box_lines[1])
     }
 
@@ -74,7 +76,7 @@ fn draw_box(content: &[String], subject_type: String) {
         let count = item.chars().count();
         let mut space_size = " ".to_owned();
         if count < max_width {
-            for _ in 0 .. max_width - count {
+            for _ in 0..max_width - count {
                 space_size.push_str(" ")
             }
         };
@@ -119,7 +121,7 @@ async fn show_notifications_cli() -> Result<(), Box<dyn std::error::Error>> {
         let url = url.replace("https://api.github.com/repos/", "https://github.com/");
         let url = url.replace("pulls", "pull");
 
-        let content = [title, [full_name, url].join(" "), subject_type.clone()];
+        let content = [subject_type.clone(), title, [full_name, url].join(" ")];
 
         draw_box(&content, subject_type)
     }
@@ -127,11 +129,43 @@ async fn show_notifications_cli() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
+async fn show_repos_user(user: String) -> Result<(), Box<dyn std::error::Error>> {
+    let url = format!("https://api.github.com/users/{}/repos", user);
+
+    let repos = make_json_request(&url).await?.json::<Repos>().await?;
+
+    for r in repos {
+        let name = r.name.unwrap();
+        let id = r.id.unwrap();
+
+        let content = [id.to_string(), name];
+
+        draw_box(&content, id.to_string())
+    }
+
+    Ok(())
+}
+
+async fn show_user() -> Result<User, Box<dyn std::error::Error>> {
+    let url = format!("https://api.github.com/user");
+    let user = make_json_request(&url).await?.json::<User>().await?;
+
+    Ok(user)
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let opt = Opt::from_args();
-    println!("{:#?}", opt);
     dotenv().ok();
-    show_notifications_cli().await?;
+    let opt = Opt::from_args();
+    let user = show_user().await?;
+
+    if opt.repos {
+        match opt.user {
+            Some(u) => show_repos_user(u).await?,
+            None => show_repos_user(String::from(user.login)).await?,
+        }
+    } else {
+        show_notifications_cli().await?;
+    }
     Ok(())
 }
