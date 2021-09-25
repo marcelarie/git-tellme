@@ -1,8 +1,9 @@
 use crate::api::make_json_request;
 use crate::drawing::draw_box;
 use crate::models::notifications::Notifications;
+use anyhow::Result;
 
-pub async fn show_notifications_cli() -> Result<(), Box<dyn std::error::Error>> {
+pub async fn show_notifications_cli() -> Result<()> {
     let notifications = make_json_request("https://api.github.com/notifications")
         .await?
         .json::<Notifications>()

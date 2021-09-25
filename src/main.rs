@@ -1,4 +1,5 @@
 #![feature(format_args_capture)]
+use anyhow::Result;
 use dotenv::dotenv;
 use structopt::StructOpt;
 
@@ -12,7 +13,7 @@ use commands::{notification_com::*, repo_com::*, user_com::*};
 use options::Opt;
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main() -> Result<()> {
     dotenv().ok();
     let opt = Opt::from_args();
     let user = show_user().await?;

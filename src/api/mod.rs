@@ -1,3 +1,4 @@
+use anyhow::Result;
 use reqwest::{
     header::{HeaderMap, HeaderValue, AUTHORIZATION, USER_AGENT},
     Client, Response,
@@ -14,7 +15,7 @@ pub fn construct_headers() -> HeaderMap {
     headers
 }
 
-pub async fn make_json_request(url: &str) -> Result<Response, Box<dyn std::error::Error>> {
+pub async fn make_json_request(url: &str) -> Result<Response> {
     let res = Client::new()
         .get(url)
         .headers(construct_headers())
