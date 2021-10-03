@@ -18,3 +18,7 @@
     -   Create a hashmap of ids as keys
     -   Do calls every X time to check for new stuff
     -   When a new repo appears notify the user
+
+## Dev Todos
+
+-   i'm tired check the code Todos
