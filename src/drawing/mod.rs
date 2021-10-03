@@ -1,77 +1,111 @@
-use colored::*;
-pub fn draw_box(content: &[String], subject_type: String) {
-    // get max size
-    let mut max_width = 0;
-    for item in content.iter() {
-        if item.chars().count() > max_width {
-            max_width = item.chars().count()
-        };
+// use colored::*;
+
+pub struct Box<'content> {
+    sides: BoxSides,
+    width: usize,
+    subject_type: String,
+    content: &'content [String],
+    color: (u32, u32, u32),
+}
+
+struct BoxSides {
+    horizontal_side: String,
+    vertical_side: String,
+    top_left_corner: String,
+    bottom_left_corner: String,
+    top_right_corner: String,
+    bottom_right_corner: String,
+}
+
+impl Box<'_> {
+    fn calculate_box_width(&mut self) {
+        for box_item in self.content.iter() {
+            if box_item.chars().count() > self.width {
+                self.width = box_item.chars().count()
+            };
+        }
     }
 
-    //============>   0    1    2    3    4    5
-    let box_lines = ["┏", "━", "┓", "┃", "┗", "┛"];
-    //  let box_lines = ["🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏"];
-
-    // generate box_width
-    let mut box_width = box_lines[1].to_owned();
-    for _ in 0..max_width {
-        box_width.push_str(box_lines[1])
+    fn get_box_width(&mut self) -> String {
+        let _ = &self.calculate_box_width();
+        let mut box_width = String::new();
+        for _ in 0..self.width {
+            box_width.push_str(&self.sides.horizontal_side)
+        }
+        box_width
     }
 
-    let upper_box = [
-        box_lines[0],
-        box_lines[1],
-        &box_width,
-        box_lines[1],
-        box_lines[2],
-    ]
-    .join("");
-    let lower_box = [
-        box_lines[4],
-        box_lines[1],
-        &box_width,
-        box_lines[1],
-        box_lines[5],
-    ]
-    .join("");
-
-    // print full box
-    // color by type
-    if subject_type == "Issue" {
-        println!("{}", upper_box.truecolor(211, 160, 77))
-    } else {
-        println!("{}", upper_box.truecolor(123, 146, 70))
-    };
-    for item in content.iter() {
-        let count = item.chars().count();
-        let mut space_size = " ".to_owned();
-        if count < max_width {
-            for _ in 0..max_width - count {
-                space_size.push_str(" ")
-            }
+    fn get_box_color(&mut self) {
+        let color = match self.subject_type.as_str() {
+            "Issue" => (211, 160, 77),
+            _ => (123, 146, 70),
+            // None => panic!("No subject type found on Box."),
         };
+        self.color = color;
+    }
 
-        if subject_type == "Issue" {
+    pub fn draw_box<'c>(&mut self) {
+        let mut upper_box = String::new();
+        let mut lower_box = String::new();
+        let horizontal_side = &self.get_box_width().clone();
+
+        let _ = [
+            &self.sides.top_left_corner,
+            &self.sides.horizontal_side,
+            horizontal_side,
+            &self.sides.horizontal_side,
+            &self.sides.top_right_corner,
+        ]
+        .map(|s| upper_box.push_str(s));
+
+        let _ = [
+            &self.sides.bottom_left_corner,
+            &self.sides.horizontal_side,
+            horizontal_side,
+            &self.sides.horizontal_side,
+            &self.sides.bottom_right_corner,
+        ]
+        .map(|s| lower_box.push_str(s));
+
+        let _ = self.get_box_color();
+
+        // TODO: BOX COLOR
+        println!("{}", upper_box);
+        for box_word in self.content.iter() {
+            let word_count = box_word.chars().count();
+            let width = self.get_box_width().chars().count();
+            let mut box_empty_space = String::from("");
+            if word_count < width {
+                for _ in 0..width - word_count {
+                    box_empty_space.push_str(" ")
+                }
+            };
             println!(
                 "{} {}{} {}",
-                box_lines[3].truecolor(211, 160, 77),
-                item,
-                space_size,
-                box_lines[3].truecolor(211, 160, 77)
+                self.sides.vertical_side, box_word, box_empty_space, self.sides.vertical_side,
             )
-        } else {
-            println!(
-                "{} {}{} {}",
-                box_lines[3].truecolor(123, 146, 70),
-                item,
-                space_size,
-                box_lines[3].truecolor(123, 146, 70)
-            )
-        };
+        }
+        println!("{}", lower_box);
     }
-    if subject_type == "Issue" {
-        println!("{}", lower_box.truecolor(211, 160, 77));
-    } else {
-        println!("{}", lower_box.truecolor(123, 146, 70));
+}
+
+pub fn draw_box<'c>(content: &'c [String], subject_type: String) {
+    let box_sides = BoxSides {
+        horizontal_side: String::from("━"),
+        vertical_side: String::from("┃"),
+        top_left_corner: String::from("┏"),
+        bottom_left_corner: String::from("┗"),
+        top_right_corner: String::from("┓"),
+        bottom_right_corner: String::from("┛"),
     };
+
+    let mut the_box = Box {
+        sides: box_sides,
+        width: 0,
+        color: (0, 0, 0),
+        subject_type,
+        content,
+    };
+
+    the_box.draw_box();
 }
