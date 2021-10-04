@@ -45,10 +45,9 @@ impl Box<'_> {
     }
 
     pub fn draw_box<'c>(&mut self) {
-        let mut upper_box = String::new();
-        let mut lower_box = String::new();
         let horizontal_side = &self.get_box_width().clone();
 
+        let mut upper_box = String::new();
         let _ = [
             &self.sides.top_left_corner,
             &self.sides.horizontal_side,
@@ -58,6 +57,7 @@ impl Box<'_> {
         ]
         .map(|s| upper_box.push_str(s));
 
+        let mut lower_box = String::new();
         let _ = [
             &self.sides.bottom_left_corner,
             &self.sides.horizontal_side,
@@ -90,17 +90,15 @@ impl Box<'_> {
 }
 
 pub fn draw_box<'c>(content: &'c [String], subject_type: String) {
-    let box_sides = BoxSides {
-        horizontal_side: String::from("━"),
-        vertical_side: String::from("┃"),
-        top_left_corner: String::from("┏"),
-        bottom_left_corner: String::from("┗"),
-        top_right_corner: String::from("┓"),
-        bottom_right_corner: String::from("┛"),
-    };
-
     let mut the_box = Box {
-        sides: box_sides,
+        sides: BoxSides {
+            horizontal_side: String::from("━"),
+            vertical_side: String::from("┃"),
+            top_left_corner: String::from("┏"),
+            bottom_left_corner: String::from("┗"),
+            top_right_corner: String::from("┓"),
+            bottom_right_corner: String::from("┛"),
+        },
         width: 0,
         color: (0, 0, 0),
         subject_type,
