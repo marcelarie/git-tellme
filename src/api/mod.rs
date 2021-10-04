@@ -19,7 +19,7 @@ fn get_token() -> String {
 pub fn construct_headers() -> HeaderMap {
     let mut headers = HeaderMap::new();
     let token = env::var("AUTH_TOKEN").unwrap_or_else(|_| get_token());
-    headers.insert(AUTHORIZATION, HeaderValue::from_str(&token).unwrap());
+    headers.insert(AUTHORIZATION, HeaderValue::from_str(token.trim()).unwrap());
     headers.insert(USER_AGENT, HeaderValue::from_static("reqwest"));
     assert!(headers.contains_key(AUTHORIZATION));
     assert!(headers.contains_key(USER_AGENT));
