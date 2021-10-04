@@ -2,6 +2,14 @@
 name = "git-tellme"
 version = "0.1.0"
 edition = "2021"
+authors = ["Marcel Arie <marcelarie95@gmail.com>"]
+license = "MIT OR Apache-2.0"
+description = "A custom tool to check and subscribe to github notifications from the CLI"
+readme = "README.md"
+homepage = "https://github.com/marcelarie/git-tellme"
+repository = "https://github.com/marcelarie/git-tellme"
+keywords = ["cli", "git", "notifications", "users"]
+categories = ["command-line-utilities"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
