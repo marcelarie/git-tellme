@@ -1,4 +1,4 @@
-## git-tellme: a custom Github notifications for the CLI
+## git-tellme: github notifications for the CLI
 
 I want my own git notifications using the Github API without the browser.
 

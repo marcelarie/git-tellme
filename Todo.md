@@ -6,13 +6,13 @@
 
 -   [ ] Better colors
 -   [ ] Add icons on the CLI
--   [ ] Add CLI commands
+-   [x] Add CLI commands
 
--   [ ] Add --help and --about
+-   [x] Add --help and --about
 
 ## Dev Todos dom 12 sep 2021
 
--   [ ] Run in the brackground when making a subscrition
+-   [ ] Run in the brackground when making a subscription
     -   Make a first call to that user profile
     -   Save the ids of all the repos
     -   Create a hashmap of ids as keys
@@ -22,3 +22,6 @@
 ## Dev Todos
 
 -   i'm tired check the code Todos
+-   [ ] Cache
+-   [ ] binary alias like `gtm` for `git-tellme`
+-   [ ] Redo colors
