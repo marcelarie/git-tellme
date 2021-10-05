@@ -25,3 +25,4 @@
 -   [ ] Cache
 -   [ ] binary alias like `gtm` for `git-tellme`
 -   [ ] Redo colors
+-   [ ] Add notifications from Discussions

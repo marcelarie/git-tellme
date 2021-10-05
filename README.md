@@ -112,7 +112,7 @@ So the gpg-agent stops asking every second for the master password.
 
 ```bash
 default-cache-ttl 34560000
-maximum-cache-ttl 34560000
+max-cache-ttl 34560000
 ```
 
 ##### 2. Then to save your GitHub token:
