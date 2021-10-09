@@ -18,11 +18,10 @@ To get your notifications:
 
 ```bash
 $ git-tellme # or git-tellme -n
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Issue                                                                  ┃
-┃ Protocol error - Target closed: puppeteer stopped working.             ┃
-┃ puppeteer/puppeteer https://github.com/puppeteer/puppeteer/issues/7455 ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ treesitter/highlighter.lua:145: end_col value outside range ┃
+┃ https://github.com/neovim/neovim/issues/12861               ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 # click on the link to open the issue
 ```
 
@@ -30,25 +29,27 @@ To get your repositories:
 
 ```bash
 $ git-tellme -r
-┏━━━━━━━━━━━━┓
-┃ 398634567  ┃
-┃ git-tellme ┃
-┗━━━━━━━━━━━━┛
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ git-tellme                               ┃
+┃ https://github.com/marcelarie/git-tellme ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 ```
 
 To get someone else repositories:
 
 ```bash
 $ git-tellme -ru rylev
-┏━━━━━━━━━━━━━┓
-┃ 336591832   ┃
-┃ const-utf16 ┃
-┗━━━━━━━━━━━━━┛
-┏━━━━━━━━━━━┓
-┃ 27019437  ┃
-┃ coreutils ┃
-┗━━━━━━━━━━━┛
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ const-utf16                          ┃
+┃ https://github.com/rylev/const-utf16 ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ coreutils                          ┃
+┃ https://github.com/rylev/coreutils ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 ```
+
+To get help:
 
 ```bash
 $ git-tellme -h
@@ -93,6 +94,7 @@ you have a better explanation but basically you will need to run this commands:
 ```bash
 gpg --gen-key
 # Identify and create your database
+# shorter password is better
 # ...
 gpg --list-keys
 # The command will return something like this

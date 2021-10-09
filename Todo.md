@@ -24,5 +24,5 @@
 -   i'm tired check the code Todos
 -   [ ] Cache
 -   [ ] binary alias like `gtm` for `git-tellme`
--   [ ] Redo colors
--   [ ] Add notifications from Discussions
+-   [x] Redo colors
+-   [x] Add notifications from Discussions
