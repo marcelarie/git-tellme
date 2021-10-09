@@ -1,3 +1,5 @@
+use colored::Colorize;
+
 // use colored::*;
 
 pub struct Box<'content> {
@@ -5,7 +7,6 @@ pub struct Box<'content> {
     width: usize,
     subject_type: String,
     content: &'content [String],
-    color: (u32, u32, u32),
 }
 
 struct BoxSides {
@@ -35,13 +36,13 @@ impl Box<'_> {
         box_width
     }
 
-    fn get_box_color(&mut self) {
+    fn get_box_color(&mut self) -> (u8, u8, u8) {
         let color = match self.subject_type.as_str() {
             "Issue" => (211, 160, 77),
+            "Discussion" => (251, 241, 199),
             _ => (123, 146, 70),
-            // None => panic!("No subject type found on Box."),
         };
-        self.color = color;
+        color
     }
 
     pub fn draw_box<'c>(&mut self) {
@@ -67,10 +68,9 @@ impl Box<'_> {
         ]
         .map(|s| lower_box.push_str(s));
 
-        let _ = self.get_box_color();
+        let (r, g, b) = self.get_box_color();
 
-        // TODO: BOX COLOR
-        println!("{}", upper_box);
+        println!("{}", upper_box.truecolor(r, g, b));
         for box_word in self.content.iter() {
             let word_count = box_word.chars().count();
             let width = self.get_box_width().chars().count();
@@ -82,10 +82,13 @@ impl Box<'_> {
             };
             println!(
                 "{} {}{} {}",
-                self.sides.vertical_side, box_word, box_empty_space, self.sides.vertical_side,
+                self.sides.vertical_side.truecolor(r, g, b),
+                box_word,
+                box_empty_space,
+                self.sides.vertical_side.truecolor(r, g, b),
             )
         }
-        println!("{}", lower_box);
+        println!("{}", lower_box.truecolor(r, g, b));
     }
 }
 
@@ -100,7 +103,6 @@ pub fn draw_box<'c>(content: &'c [String], subject_type: String) {
             bottom_right_corner: String::from("┛"),
         },
         width: 0,
-        color: (0, 0, 0),
         subject_type,
         content,
     };

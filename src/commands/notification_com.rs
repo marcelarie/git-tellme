@@ -10,7 +10,6 @@ pub async fn show_notifications_cli() -> Result<()> {
         .await?;
 
     for n in notifications {
-        let full_name = n.repository.full_name;
         let title = n.subject.title;
         let url = match n.subject.url {
             Some(url) => url,
@@ -30,8 +29,7 @@ pub async fn show_notifications_cli() -> Result<()> {
             url
         };
 
-        // let content = [subject_type.clone(), title, [full_name, url].join(" ")];
-        let content = [title, [full_name, url].join(" ")];
+        let content = [title, url];
 
         draw_box(&content, subject_type)
     }
