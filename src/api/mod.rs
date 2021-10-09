@@ -34,3 +34,15 @@ pub async fn make_json_request(url: &str) -> Result<Response> {
         .await?;
     Ok(res)
 }
+
+pub async fn url_shortener(url: &str) -> Result<String> {
+    let res = Client::new()
+        .post("https://git.io")
+        .form(&[("url", url)])
+        .send()
+        .await?;
+    Ok(match res.headers().get("location") {
+        Some(short) => short.to_str().unwrap().to_owned(),
+        None => panic!("Can't shorten the given url {}", &url),
+    })
+}
