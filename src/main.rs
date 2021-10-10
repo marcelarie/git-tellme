@@ -11,6 +11,8 @@ mod options;
 
 use commands::{notification_com::*, repo_com::*, user_com::*};
 use options::Opt;
+use std::time::Duration;
+use tokio::{task, time};
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -24,7 +26,19 @@ async fn main() -> Result<()> {
             None => show_repos_user(String::from(user.login)).await?,
         }
     } else {
-        show_notifications_cli().await?;
+        if opt.system {
+            let forever = task::spawn(async {
+                let mut interval = time::interval(Duration::from_millis(1000));
+
+                loop {
+                    interval.tick().await;
+                    show_notifications_sys().await;
+                }
+            });
+            forever.await?;
+        } else {
+            show_notifications_cli().await;
+        }
     }
     Ok(())
 }

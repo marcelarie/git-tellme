@@ -6,6 +6,10 @@ pub struct Opt {
     /// Get Github user notifications
     pub notifications: bool,
 
+    #[structopt(short = "f", long = "--system")]
+    /// Show notifications on the system
+    pub system: bool,
+
     #[structopt(short = "r", long = "repos")]
     /// Get Github user repositories
     pub repos: bool,

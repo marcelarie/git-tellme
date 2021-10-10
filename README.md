@@ -14,7 +14,15 @@ For the terminal fonts with ligatures like
 
 #### Main commands
 
-To get your notifications:
+To get your notifications on the desktop run `git-tellme -f` on the backoung
+with `&` or create a deamon. For the moment it just listens all the time for
+notifications, non stop:
+
+```bash
+$ echo 'git-tellme -f &' >> ~/.bashrc
+```
+
+To get your notifications on the CLI:
 
 ```bash
 $ git-tellme # or git-tellme -n
@@ -53,7 +61,7 @@ To get help:
 
 ```bash
 $ git-tellme -h
-git-tellme 0.1.0
+git-tellme 0.1.4
 
 USAGE:
     git-tellme [FLAGS] [OPTIONS]
@@ -62,11 +70,12 @@ FLAGS:
     -h, --help                 Prints help information
     -n, --get-notifications    Get Github user notifications
     -r, --repos                Get Github user repositories
-    -s, --subscribe            (WIP)
+    -s, --subscribe
+    -f, --system               Show notifications on the system
     -V, --version              Prints version information
 
 OPTIONS:
-    -u, --user <user>          (WIP) Select specific user profile
+    -u, --user <user>    Select specific user profile
 ```
 
 If you want to get your notifications when you open your terminal you can add
