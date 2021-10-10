@@ -14,12 +14,13 @@ For the terminal fonts with ligatures like
 
 #### Main commands
 
-To get your notifications on the desktop run `git-tellme -f` on the backoung
+To get your notifications on the desktop run `git-tellme -f` on the background
 with `&` or create a deamon. For the moment it just listens all the time for
-notifications, non stop:
+notifications, non stop. And the notifications are persistent. On click the
+notification will be opened with `xdg-open`, so your default system browser:
 
 ```bash
-$ echo 'git-tellme -f &' >> ~/.bashrc
+$ git-tellme -f &
 ```
 
 To get your notifications on the CLI:
