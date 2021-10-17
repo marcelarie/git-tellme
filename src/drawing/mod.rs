@@ -3,18 +3,18 @@ use colored::Colorize;
 // use colored::*;
 
 pub struct Box<'content> {
-    sides: BoxSides,
-    width: usize,
+    sides:        BoxSides,
+    width:        usize,
     subject_type: String,
-    content: &'content [String],
+    content:      &'content [String],
 }
 
 struct BoxSides {
-    horizontal_side: String,
-    vertical_side: String,
-    top_left_corner: String,
-    bottom_left_corner: String,
-    top_right_corner: String,
+    horizontal_side:     String,
+    vertical_side:       String,
+    top_left_corner:     String,
+    bottom_left_corner:  String,
+    top_right_corner:    String,
     bottom_right_corner: String,
 }
 
@@ -95,12 +95,12 @@ impl Box<'_> {
 pub fn draw_box<'c>(content: &'c [String], subject_type: String) {
     let mut the_box = Box {
         sides: BoxSides {
-            horizontal_side: String::from("━"),
-            vertical_side: String::from("┃"),
-            top_left_corner: String::from("┏"),
-            bottom_left_corner: String::from("┗"),
-            top_right_corner: String::from("┓"),
-            bottom_right_corner: String::from("┛"),
+            horizontal_side:     String::from("─"),
+            vertical_side:       String::from("│"),
+            top_left_corner:     String::from("┌"),
+            bottom_left_corner:  String::from("└"),
+            top_right_corner:    String::from("┐"),
+            bottom_right_corner: String::from("┘"),
         },
         width: 0,
         subject_type,

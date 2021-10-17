@@ -9,7 +9,7 @@ pub async fn show_repos_user(user: String) -> Result<()> {
     let repos = make_json_request(&url).await?.json::<Repos>().await?;
 
     for r in repos {
-        let name = r.name.unwrap();
+        let name = r.name.unwrap_or(String::from("<MISSING NAME>"));
         let id = r.id.unwrap();
         let url = r.html_url.unwrap();
 

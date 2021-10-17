@@ -5,11 +5,13 @@ use structopt::StructOpt;
 
 mod api;
 mod commands;
+mod db;
 mod drawing;
 mod models;
 mod options;
 
 use commands::{notification_com::*, repo_com::*, user_com::*};
+use db::*;
 use options::Opt;
 use std::time::Duration;
 use tokio::{task, time};
@@ -20,25 +22,27 @@ async fn main() -> Result<()> {
     let opt = Opt::from_args();
     let user = show_user().await?;
 
-    if opt.repos {
-        match opt.user {
-            Some(u) => show_repos_user(u).await?,
-            None => show_repos_user(String::from(user.login)).await?,
-        }
-    } else {
-        if opt.system {
-            let forever = task::spawn(async {
-                let mut interval = time::interval(Duration::from_millis(1000));
+    let _ = test_server()?;
 
-                loop {
-                    interval.tick().await;
-                    show_notifications_sys().await;
-                }
-            });
-            forever.await?;
-        } else {
-            show_notifications_cli().await;
-        }
-    }
+    // if opt.repos {
+    // match opt.user {
+    // Some(u) => show_repos_user(u).await?,
+    // None => show_repos_user(String::from(user.login)).await?,
+    // }
+    // } else {
+    // if opt.system {
+    // let forever = task::spawn(async {
+    // let mut interval = time::interval(Duration::from_millis(1000));
+
+    // loop {
+    // interval.tick().await;
+    // show_notifications_sys().await.unwrap();
+    // }
+    // });
+    // forever.await?;
+    // } else {
+    // show_notifications_cli().await?;
+    // }
+    // }
     Ok(())
 }

@@ -42,7 +42,7 @@ pub async fn url_shortener(url: &str) -> Result<String> {
         .send()
         .await?;
     Ok(match res.headers().get("location") {
-        Some(short) => short.to_str().unwrap().to_owned(),
+        Some(short) => short.to_str().unwrap_or_default().to_owned(),
         None => panic!("Can't shorten the given url {}", &url),
     })
 }
