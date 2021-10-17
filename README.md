@@ -4,10 +4,9 @@ I want my own git notifications using the Github API without the browser.
 
 For the moment I will return the data to the terminal. Maybe later I can put a
 frontend [dunst](https://github.com/dunst-project/dunst) style. The project is
-still a **work in progress**. The main idea its to have a small program to
-subscribe to github user repositories, user profiles and manage all your
-notifications from the comfort of your terminal. Subscribe to users/projects to
-get notified when a new repository is created will be possible too.
+still a **work in progress**. This is a small program to subscribe to github
+user repositories, user profiles and manage all your notifications from the
+comfort of your terminal.
 
 For the terminal fonts with ligatures like
 [FiraCode](https://github.com/tonsky/FiraCode) are recommended.
@@ -15,9 +14,9 @@ For the terminal fonts with ligatures like
 #### Main commands
 
 To get your notifications on the desktop run `git-tellme -f` on the background
-with `&` or create a deamon. For the moment it just listens all the time for
-notifications, non stop. And the notifications are persistent. On click the
-notification will be opened with `xdg-open`, so your default system browser:
+with `&` or create a daemon. For the moment it just listens all the time for
+notifications, non stop. And they are persistent. On click the notification will
+be opened with `xdg-open` ( your default system browser ):
 
 ```bash
 $ git-tellme -f &
@@ -85,8 +84,6 @@ If you want to get your notifications when you open your terminal you can add
 ```bash
 echo 'git-tellme' >> ~/.bashrc
 ```
-
-The performance will get better, I promise.
 
 ## Before you start
 
@@ -166,7 +163,7 @@ PATH=$PATH:`{pwd}`/target/release/git-tellme
 ## Main Todos
 
 -   [ ] Ask for username and authentication token or password and write it on
-        the .env
+        redis
 -   [x] Get notifications from the user
 -   [x] Draw dynamic boxes for the CLI
 -   [x] Open issue on the browser when clicking on the issue id ( on CLI)

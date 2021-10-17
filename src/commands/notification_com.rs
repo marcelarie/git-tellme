@@ -16,10 +16,8 @@ static SOUND: &str = "message-new-instant";
 static SOUND: &'static str = "Mail";
 
 pub async fn show_notifications_cli() -> Result<()> {
-    let notifications = make_json_request("https://api.github.com/notifications")
-        .await?
-        .json::<Notifications>()
-        .await?;
+    let res = make_json_request("https://api.github.com/notifications").await?;
+    let notifications = res.json::<Notifications>().await?;
 
     for n in notifications {
         let title = n.subject.title;
@@ -33,7 +31,8 @@ pub async fn show_notifications_cli() -> Result<()> {
         };
         let subject_type = n.subject.subject_type;
 
-        let url = url.replace("https://api.github.com/repos/", "https://github.com/");
+        let url =
+            url.replace("https://api.github.com/repos/", "https://github.com/");
         let url = url.replace("pulls", "pull");
         let url = if url.chars().count() >= 60 {
             url_shortener(&url).await?
@@ -57,10 +56,11 @@ fn xdg_open(url: String) {
 }
 
 pub async fn show_notifications_sys() -> Result<()> {
-    let notifications = make_json_request("https://api.github.com/notifications")
-        .await?
-        .json::<Notifications>()
-        .await?;
+    let notifications =
+        make_json_request("https://api.github.com/notifications")
+            .await?
+            .json::<Notifications>()
+            .await?;
 
     for n in notifications {
         let title = n.subject.title;
@@ -75,7 +75,8 @@ pub async fn show_notifications_sys() -> Result<()> {
         };
         let subject_type = n.subject.subject_type;
 
-        let url = url.replace("https://api.github.com/repos/", "https://github.com/");
+        let url =
+            url.replace("https://api.github.com/repos/", "https://github.com/");
         let url = url.replace("pulls", "pull");
         let url = if url.chars().count() >= 60 {
             url_shortener(&url).await?
