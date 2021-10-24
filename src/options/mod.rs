@@ -21,4 +21,12 @@ pub struct Opt {
     #[structopt(short = "u", long = "user")]
     /// Select specific user profile
     pub user: Option<String>,
+
+    #[structopt(
+        short = "t",
+        long = "token",
+        help = "Pass `-t` and you're GitHub token from\nhttps://github.com/settings/tokens"
+    )]
+    /// Save user GitHub Auth Token
+    pub github_token: Option<String>,
 }

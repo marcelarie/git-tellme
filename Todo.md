@@ -26,3 +26,8 @@
 -   [ ] binary alias like `gtm` for `git-tellme`
 -   [x] Redo colors
 -   [x] Add notifications from Discussions
+
+## Dev Todos dom 17 oct 2021 20:37:03 CEST
+
+-   [ ] Check `hyper` HTTP lib and if its better than `reqwest` do a migration
+-   [ ] Ask for the token on start
