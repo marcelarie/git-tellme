@@ -11,132 +11,6 @@ comfort of your terminal.
 For the terminal fonts with ligatures like
 [FiraCode](https://github.com/tonsky/FiraCode) are recommended.
 
-#### Main commands
-
-To get your notifications on the desktop run `git-tellme -f` on the background
-with `&` or create a daemon. For the moment it just listens all the time for
-notifications, non stop. And they are persistent. On click the notification will
-be opened with `xdg-open` ( your default system browser ):
-
-```bash
-$ git-tellme -f &
-```
-
-To get your notifications on the CLI:
-
-```bash
-$ git-tellme # or git-tellme -n
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ treesitter/highlighter.lua:145: end_col value outside range ┃
-┃ https://github.com/neovim/neovim/issues/12861               ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-# click on the link to open the issue
-```
-
-To get your repositories:
-
-```bash
-$ git-tellme -r
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ git-tellme                               ┃
-┃ https://github.com/marcelarie/git-tellme ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-```
-
-To get someone else repositories:
-
-```bash
-$ git-tellme -ru rylev
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ const-utf16                          ┃
-┃ https://github.com/rylev/const-utf16 ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ coreutils                          ┃
-┃ https://github.com/rylev/coreutils ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-```
-
-To get help:
-
-```bash
-$ git-tellme -h
-git-tellme 0.1.4
-
-USAGE:
-    git-tellme [FLAGS] [OPTIONS]
-
-FLAGS:
-    -h, --help                 Prints help information
-    -n, --get-notifications    Get Github user notifications
-    -r, --repos                Get Github user repositories
-    -s, --subscribe
-    -f, --system               Show notifications on the system
-    -V, --version              Prints version information
-
-OPTIONS:
-    -u, --user <user>    Select specific user profile
-```
-
-If you want to get your notifications when you open your terminal you can add
-`git-tellme` to you're `~/.bashrc`, `~/.zshrc` or `~/.config/fish/config.fish`
-
-```bash
-echo 'git-tellme' >> ~/.bashrc
-```
-
-## Before you start
-
-##### 1. First of all you will need a [personal access token from github](https://github.com/settings/tokens).
-
--   How to do get one
-    [here](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token),
-    you only can see the token one time after its creation.
-
-`git-tellme` uses the GitHub API so that token has to be accesible for the whole
-system. The best way to do that is with `pass` and `gpg`.
-[Here](https://www.thepolyglotdeveloper.com/2018/12/manage-passwords-gpg-command-line-pass/)
-you have a better explanation but basically you will need to run this commands:
-
-```bash
-gpg --gen-key
-# Identify and create your database
-# shorter password is better
-# ...
-gpg --list-keys
-# The command will return something like this
-# /home/user/.gnupg/pubring.gpg
-# ------------------------------
-# pub   4096R/68214821 2015-06-24
-# uid                  First Middle Last Suffix <first.last@host.tld>
-# sub   4096R/36A6F06D 2015-06-24
-pass init 68214821 # <-- use the pub key to initialize pass
-# mkdir: created directory ‘/home/user/.password-store/’
-# Password store initialized for 68214821
-```
-
-##### Extra: I really recommend to create a `~/.gnupg/gpg-agent.conf` file with this content inside:
-
-So the gpg-agent stops asking every second for the master password.
-
-```bash
-default-cache-ttl 34560000
-max-cache-ttl 34560000
-```
-
-##### 2. Then to save your GitHub token:
-
-```bash
-pass insert -m git-tellme/token # <-- IMPORTANT: the name needs to be git-tellme/token
-Enter contents of g and press Ctrl+D when finished:
-# PASTE_YOUR_TOKEN_HERE
-```
-
-To learn more about `pass`: https://wiki.archlinux.org/title/Pass  
-To learn more about `gpg`: https://www.gnupg.org/gph/en/manual/c14.html
-
-I know, too much ? This will be easier later, give me time...
-
 ## Installation
 
 **First install `rustup`+`cargo`:** https://rustup.rs/
@@ -158,11 +32,111 @@ cargo build --release
 PATH=$PATH:`{pwd}`/target/release/git-tellme
 ```
 
-## Commands
+#### Main commands
+
+To get your notifications on the desktop run `git-tellme -f` on the background
+with `&` or create a daemon. For the moment it just listens all the time for
+notifications, non stop. And they are persistent. On click the notification will
+be opened with `xdg-open` ( your default system browser ):
+
+```bash
+$ git-tellme -f &
+```
+
+To get your notifications on the CLI:
+
+```bash
+$ git-tellme # or git-tellme -n
+┌─────────────────────────────────────────────────────────────┐
+│ treesitter/highlighter.lua:145: end_col value outside range │
+│ https://github.com/neovim/neovim/issues/12861               │
+└─────────────────────────────────────────────────────────────┘
+# click on the link to open the issue
+```
+
+To get your repositories:
+
+```bash
+$ git-tellme -r
+┌──────────────────────────────────────────┐
+│ git-tellme                               │
+│ https://github.com/marcelarie/git-tellme │
+└──────────────────────────────────────────┘
+```
+
+To get someone else repositories:
+
+```bash
+$ git-tellme -ru rylev
+┌──────────────────────────────────────┐
+│ const-utf16                          │
+│ https://github.com/rylev/const-utf16 │
+└──────────────────────────────────────┘
+┌────────────────────────────────────┐
+│ coreutils                          │
+│ https://github.com/rylev/coreutils │
+└────────────────────────────────────┘
+```
+
+To get help:
+
+```bash
+$ git-tellme -h
+git-tellme 0.1.6
+
+USAGE:
+    git-tellme [FLAGS] [OPTIONS]
+
+FLAGS:
+    -h, --help                 Prints help information
+    -n, --get-notifications    Get Github user notifications
+    -r, --repos                Get Github user repositories
+    -s, --subscribe
+    -f, --system               Show notifications on the system
+    -V, --version              Prints version information
+
+OPTIONS:
+    -t, --token <github-token>    Pass `-t` and you're GitHub token from
+                                  https://github.com/settings/tokens
+    -u, --user <user>             Select specific user profile
+```
+
+If you want to get your notifications when you open your terminal you can add
+`git-tellme` to you're `~/.bashrc`, `~/.zshrc` or `~/.config/fish/config.fish`
+
+```bash
+echo 'git-tellme' >> ~/.bashrc
+```
+
+## Before you start
+
+##### 1. First of all you will need a [personal access token from github](https://github.com/settings/tokens).
+
+-   How to do get one
+    [here](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token),
+    you only can see the token one time after its creation.
+
+`git-tellme` uses the GitHub API so that token has to be accessible for the
+whole system. At the start `git-tellme` will ask for your token if it does not
+find it:
+
+```bash
+$ git-tellme
+<WARNING>
+    No GitHub token was found.
+    To generate one go to: https://github.com/settings/tokens
+    To save it use the --token or -t parameter:
+
+git-tellme --token <YOUR_GITHUB_TOKEN>
+
+For more information try --help
+```
+
+You just need to paste the token and done :)
 
 ## Main Todos
 
--   [ ] Ask for username and authentication token or password and write it on
+-   [x] Ask for username and authentication token or password and write it on
         redis
 -   [x] Get notifications from the user
 -   [x] Draw dynamic boxes for the CLI
@@ -170,7 +144,6 @@ PATH=$PATH:`{pwd}`/target/release/git-tellme
 -   [ ] Get user profile on the browser when clicking on the user.
 -   [ ] Same with repos.
 -   [ ] Create cronos to check for new repos from other users.
--   [ ] Frontend with Gtk (?)
 -   [ ] Notification Bell 🔔
 -   [ ] Work with FZF, FZY
 
@@ -179,5 +152,3 @@ PATH=$PATH:`{pwd}`/target/release/git-tellme
 -   [GitHub API](https://docs.github.com/en/rest)
 -   [reqwest](https://crates.io/crates/reqwest)
 -   [tokio](https://crates.io/crates/tokio)
--   [pass](https://www.passwordstore.org/)
--   [gnuPG](https://gnupg.org/)
