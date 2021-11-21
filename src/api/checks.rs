@@ -1,3 +1,6 @@
+use crate::commands::subscribe_com::{
+    check_subs_cli, get_subs_cli, subscribe_to_user_cli, unsubscribe,
+};
 use crate::options::Opt;
 
 use super::commands::{notification_com::*, repo_com::*, user_com::*};
@@ -39,6 +42,22 @@ pub async fn check_options() -> Result<()> {
                 let user = show_user().await?;
                 show_repos_user(String::from(user.login)).await?
             }
+        }
+    } else if opt.sub {
+        match opt.user {
+            Some(u) => {
+                subscribe_to_user_cli(u).await?;
+            }
+            None => {
+                get_subs_cli().await?;
+            }
+        }
+    } else if opt.unsub {
+        match opt.user {
+            Some(u) => {
+                unsubscribe(&u).await?;
+            }
+            None => (),
         }
     } else {
         if opt.system {

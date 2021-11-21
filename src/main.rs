@@ -1,4 +1,3 @@
-#![feature(format_args_capture)]
 use anyhow::Result;
 use api::checks::check_token;
 use dotenv::dotenv;

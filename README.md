@@ -143,7 +143,9 @@ You just need to paste the token and done :)
 - [x] Open issue on the browser when clicking on the issue id ( on CLI)
 - [ ] Get user profile on the browser when clicking on the user.
 - [ ] Same with repos.
-- [ ] Create cronos to check for new repos from other users.
+- [ ] Create cronos to check for new repos from other users on sys
+      notifications.
+- [x] Subscribe to user new repositories
 - [ ] Notification Bell 🔔
 - [ ] Work with FZF, FZY
 

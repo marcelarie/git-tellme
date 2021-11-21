@@ -56,3 +56,45 @@ pub fn get_token() -> redis::RedisResult<String> {
         redis::Client::open("redis://127.0.0.1/")?.get_connection()?;
     Ok(con.get("TOKEN")?)
 }
+
+pub fn _get(key: &str) -> redis::RedisResult<String> {
+    lift_up_server();
+    let mut con =
+        redis::Client::open("redis://127.0.0.1/")?.get_connection()?;
+    Ok(con.get(key)?)
+}
+
+pub fn _set(key: &str, value: &str) -> redis::RedisResult<String> {
+    lift_up_server();
+    let mut con =
+        redis::Client::open("redis://127.0.0.1/")?.get_connection()?;
+    Ok(con.set(key, value)?)
+}
+
+pub fn hset(hash: &str, key: &str, value: &str) -> redis::RedisResult<i32> {
+    lift_up_server();
+    let mut con =
+        redis::Client::open("redis://127.0.0.1/")?.get_connection()?;
+    Ok(con.hset(hash, key, value)?)
+}
+
+pub fn hget(hash: &str, key: &str) -> redis::RedisResult<String> {
+    lift_up_server();
+    let mut con =
+        redis::Client::open("redis://127.0.0.1/")?.get_connection()?;
+    Ok(con.hget(hash, key)?)
+}
+
+pub fn hkeys(hash: &str) -> redis::RedisResult<Vec<String>> {
+    lift_up_server();
+    let mut con =
+        redis::Client::open("redis://127.0.0.1/")?.get_connection()?;
+    Ok(con.hkeys(hash)?)
+}
+
+pub fn hdel(hash: &str, field: &str) -> redis::RedisResult<Vec<String>> {
+    lift_up_server();
+    let mut con =
+        redis::Client::open("redis://127.0.0.1/")?.get_connection()?;
+    Ok(con.hdel(hash, field)?)
+}

@@ -12,12 +12,12 @@ pub async fn show_repos_user(user: String) -> Result<()> {
 
     for r in repos {
         let name = r.name.unwrap_or(String::from("<MISSING NAME>"));
-        let id = r.id.unwrap();
+        let id = r.id.unwrap().to_string();
         let url = r.html_url.unwrap();
 
         let content = [name, url];
 
-        draw_box(&content, id.to_string())
+        draw_box(&content, id)
     }
 
     Ok(())
