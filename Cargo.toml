@@ -1,6 +1,6 @@
 [package]
 name = "git-tellme"
-version = "0.1.6"
+version = "0.1.7"
 edition = "2021"
 authors = ["Marcel Arie <marcelarie95@gmail.com>"]
 license = "MIT OR Apache-2.0"
@@ -27,3 +27,7 @@ redis = "0.21.3"
 
 [dev-dependencies]
 color-backtrace = "0.5"
+
+[[bin]]
+path = "src/main.rs"
+name = "gtm"

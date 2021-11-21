@@ -9,7 +9,7 @@ use structopt::StructOpt;
 use tokio::{task, time};
 
 fn no_token_message() {
-    let git_tellme = String::from("git-tellme").truecolor(255, 215, 0);
+    let git_tellme = String::from("gtm").truecolor(255, 215, 0);
     println!("<{}>", String::from("WARNING").truecolor(255, 69, 0));
     println!("    No GitHub token was found. ");
     println!("    To generate one go to: https://github.com/settings/tokens");

@@ -29,24 +29,24 @@ cd git-tellme
 echo AUTH_TOKEN='token YOUR_TOKEN_HERE' > .env
 cargo install
 cargo build --release
-PATH=$PATH:`{pwd}`/target/release/git-tellme
+PATH=$PATH:`{pwd}`/target/release/gtm
 ```
 
 #### Main commands
 
-To get your notifications on the desktop run `git-tellme -f` on the background
-with `&` or create a daemon. For the moment it just listens all the time for
+To get your notifications on the desktop run `gtm -f` on the background with `&`
+or create a daemon. For the moment it just listens all the time for
 notifications, non stop. And they are persistent. On click the notification will
 be opened with `xdg-open` ( your default system browser ):
 
 ```bash
-$ git-tellme -f &
+$ gtm -f &
 ```
 
 To get your notifications on the CLI:
 
 ```bash
-$ git-tellme # or git-tellme -n
+$ gtm # or gtm -n
 ┌─────────────────────────────────────────────────────────────┐
 │ treesitter/highlighter.lua:145: end_col value outside range │
 │ https://github.com/neovim/neovim/issues/12861               │
@@ -57,7 +57,7 @@ $ git-tellme # or git-tellme -n
 To get your repositories:
 
 ```bash
-$ git-tellme -r
+$ gtm -r
 ┌──────────────────────────────────────────┐
 │ git-tellme                               │
 │ https://github.com/marcelarie/git-tellme │
@@ -67,7 +67,7 @@ $ git-tellme -r
 To get someone else repositories:
 
 ```bash
-$ git-tellme -ru rylev
+$ gtm -ru rylev
 ┌──────────────────────────────────────┐
 │ const-utf16                          │
 │ https://github.com/rylev/const-utf16 │
@@ -81,7 +81,7 @@ $ git-tellme -ru rylev
 To get help:
 
 ```bash
-$ git-tellme -h
+$ gtm -h
 git-tellme 0.1.6
 
 USAGE:
@@ -105,29 +105,29 @@ If you want to get your notifications when you open your terminal you can add
 `git-tellme` to you're `~/.bashrc`, `~/.zshrc` or `~/.config/fish/config.fish`
 
 ```bash
-echo 'git-tellme' >> ~/.bashrc
+echo 'gtm' >> ~/.bashrc
 ```
 
 ## Before you start
 
 ##### 1. First of all you will need a [personal access token from github](https://github.com/settings/tokens).
 
--   How to do get one
-    [here](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token),
-    you only can see the token one time after its creation.
+- How to do get one
+  [here](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token),
+  you only can see the token one time after its creation.
 
 `git-tellme` uses the GitHub API so that token has to be accessible for the
 whole system. At the start `git-tellme` will ask for your token if it does not
 find it:
 
 ```bash
-$ git-tellme
+$ gtm
 <WARNING>
     No GitHub token was found.
     To generate one go to: https://github.com/settings/tokens
     To save it use the --token or -t parameter:
 
-git-tellme --token <YOUR_GITHUB_TOKEN>
+gtm --token <YOUR_GITHUB_TOKEN>
 
 For more information try --help
 ```
@@ -136,19 +136,19 @@ You just need to paste the token and done :)
 
 ## Main Todos
 
--   [x] Ask for username and authentication token or password and write it on
-        redis
--   [x] Get notifications from the user
--   [x] Draw dynamic boxes for the CLI
--   [x] Open issue on the browser when clicking on the issue id ( on CLI)
--   [ ] Get user profile on the browser when clicking on the user.
--   [ ] Same with repos.
--   [ ] Create cronos to check for new repos from other users.
--   [ ] Notification Bell 🔔
--   [ ] Work with FZF, FZY
+- [x] Ask for username and authentication token or password and write it on
+      redis
+- [x] Get notifications from the user
+- [x] Draw dynamic boxes for the CLI
+- [x] Open issue on the browser when clicking on the issue id ( on CLI)
+- [ ] Get user profile on the browser when clicking on the user.
+- [ ] Same with repos.
+- [ ] Create cronos to check for new repos from other users.
+- [ ] Notification Bell 🔔
+- [ ] Work with FZF, FZY
 
 ### Using
 
--   [GitHub API](https://docs.github.com/en/rest)
--   [reqwest](https://crates.io/crates/reqwest)
--   [tokio](https://crates.io/crates/tokio)
+- [GitHub API](https://docs.github.com/en/rest)
+- [reqwest](https://crates.io/crates/reqwest)
+- [tokio](https://crates.io/crates/tokio)
