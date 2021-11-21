@@ -32,7 +32,7 @@ cargo build --release
 PATH=$PATH:`{pwd}`/target/release/gtm
 ```
 
-#### Main commands
+## Main commands
 
 To get your notifications on the desktop run `gtm -f` on the background with `&`
 or create a daemon. For the moment it just listens all the time for
@@ -43,7 +43,7 @@ be opened with `xdg-open` ( your default system browser ):
 $ gtm -f &
 ```
 
-To get your notifications on the CLI:
+**Get your notifications on the CLI:**
 
 ```bash
 $ gtm # or gtm -n
@@ -54,7 +54,7 @@ $ gtm # or gtm -n
 # click on the link to open the issue
 ```
 
-To get your repositories:
+**Get your repositories:**
 
 ```bash
 $ gtm -r
@@ -64,7 +64,7 @@ $ gtm -r
 └──────────────────────────────────────────┘
 ```
 
-To get someone else repositories:
+**Get someone else repositories:**
 
 ```bash
 $ gtm -ru rylev
@@ -78,21 +78,45 @@ $ gtm -ru rylev
 └────────────────────────────────────┘
 ```
 
-To get help:
+**Subscribe to someone repositories:**
+
+```bash
+$ gtm -su marcelarie
+```
+
+**Check you're subscription's**
+
+```bash
+$ gtm -s
+ ⭐ marcelarie
+┌──────────────────────────────────────────┐
+│ git-tellme                               │
+│ https://github.com/marcelarie/git-tellme │
+└──────────────────────────────────────────┘
+```
+
+**Unsubscribe:**
+
+```bash
+$ gtm -Unu microsoft
+```
+
+**Get help:**
 
 ```bash
 $ gtm -h
-git-tellme 0.1.6
+git-tellme 0.1.7
 
 USAGE:
-    git-tellme [FLAGS] [OPTIONS]
+    gtm [FLAGS] [OPTIONS]
 
 FLAGS:
     -h, --help                 Prints help information
     -n, --get-notifications    Get Github user notifications
     -r, --repos                Get Github user repositories
-    -s, --subscribe
+    -s, --subscribe            Pass `-su` and the username you want to subscribe to
     -f, --system               Show notifications on the system
+    -U, --unsubscribe          Pass `-Unu` and the username you want to unsubscribe to
     -V, --version              Prints version information
 
 OPTIONS:
@@ -100,6 +124,8 @@ OPTIONS:
                                   https://github.com/settings/tokens
     -u, --user <user>             Select specific user profile
 ```
+
+## Call on terminal startup
 
 If you want to get your notifications when you open your terminal you can add
 `git-tellme` to you're `~/.bashrc`, `~/.zshrc` or `~/.config/fish/config.fish`
@@ -110,7 +136,8 @@ echo 'gtm' >> ~/.bashrc
 
 ## Before you start
 
-##### 1. First of all you will need a [personal access token from github](https://github.com/settings/tokens).
+**1. First of all you will need a
+[personal access token from github](https://github.com/settings/tokens).**
 
 - How to do get one
   [here](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token),
@@ -134,7 +161,7 @@ For more information try --help
 
 You just need to paste the token and done :)
 
-## Main Todos
+### Main Todos
 
 - [x] Ask for username and authentication token or password and write it on
       redis
