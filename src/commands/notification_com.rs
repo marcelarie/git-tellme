@@ -34,6 +34,7 @@ pub async fn show_notifications_cli() -> Result<()> {
         let url =
             url.replace("https://api.github.com/repos/", "https://github.com/");
         let url = url.replace("pulls", "pull");
+
         let url = if url.chars().count() >= 60 {
             url_shortener(&url).await?
         } else {

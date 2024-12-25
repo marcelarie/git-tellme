@@ -35,9 +35,19 @@ pub async fn url_shortener(url: &str) -> Result<String> {
         .post("https://git.io")
         .form(&[("url", url)])
         .send()
-        .await?;
-    Ok(match res.headers().get("location") {
-        Some(short) => short.to_str().unwrap_or_default().to_owned(),
-        None => panic!("Can't shorten the given url {}", &url),
-    })
+        .await;
+
+    match res {
+        Ok(response) => {
+            if let Some(short) = response.headers().get("location") {
+                match short.to_str() {
+                    Ok(short_url) => Ok(short_url.to_owned()),
+                    Err(_) => Ok(url.to_owned()), // Return original URL if invalid UTF-8
+                }
+            } else {
+                Ok(url.to_owned()) // Return original URL if "location" header is missing
+            }
+        }
+        Err(_) => Ok(url.to_owned()), // Return original URL if the request fails
+    }
 }
