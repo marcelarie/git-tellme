@@ -5,6 +5,7 @@ use structopt::StructOpt;
 pub struct Opt {
     #[structopt(short = "n", long = "get-notifications")]
     /// Get Github user notifications
+    #[allow(dead_code)]
     pub notifications: bool,
 
     #[structopt(short = "f", long = "--system")]

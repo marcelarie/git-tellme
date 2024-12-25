@@ -1,5 +1,5 @@
 use crate::commands::subscribe_com::{
-    check_subs_cli, get_subs_cli, subscribe_to_user_cli, unsubscribe,
+    get_subs_cli, subscribe_to_user_cli, unsubscribe,
 };
 use crate::options::Opt;
 
